@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 public class ChatUserController {
@@ -23,5 +24,10 @@ public class ChatUserController {
     public void saveUser(@Valid @RequestBody ChatUserDto chatUserDto){
 
         chatUserControllerService.saveChatUser(chatUserDto);
+    }
+
+    @RequestMapping(value="/users", method=RequestMethod.GET)
+    public List<ChatUserDto> getAllUsersExceptAdmins(){
+        return chatUserControllerService.getAllUsers();
     }
 }

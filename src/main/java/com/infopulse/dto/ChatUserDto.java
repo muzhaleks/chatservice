@@ -22,4 +22,6 @@ public class ChatUserDto {
     @NotNull(message = "Password is required")
     private String password;
 
+    private Boolean isBanned;
+
 }

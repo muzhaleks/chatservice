@@ -7,6 +7,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Validator;
+import java.util.List;
 
 @Service
 public class ChatUserControllerService {
@@ -30,5 +31,10 @@ public class ChatUserControllerService {
           applicationEventPublisher.publishEvent(newChatUserDto);
 
 
+    }
+
+    public List<ChatUserDto> getAllUsers(){
+        return ChatUserConverter
+                .convertToListDto(chatUserDataService.getAllUsers());
     }
 }

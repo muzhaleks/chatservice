@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -28,5 +30,17 @@ public class ChatUserDataService {
         }
 
         return chatUserRepository.save(chatUser);
+    }
+
+    public List<ChatUser> getAllUsers(){
+        return chatUserRepository.findAll()
+                .stream()
+                .filter(entity -> notAdmin(entity.getLogin()))
+                .collect(Collectors.toList());
+    }
+
+    private boolean notAdmin(String login){
+        //todo
+        return false;
     }
 }
