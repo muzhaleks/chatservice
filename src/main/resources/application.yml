@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    username: postgres
+    password: Tsunami9
+    driverClassName: org.postgresql.Driver
+    driverDialect: org.hibernate.dialect.PostgreSQL82Dialect
+    url: jdbc:postgresql://localhost/chat_db
+  jpa:
+    hibernate:
+      ddl-auto: create
+server:
+  port: 8087
+
+
+
+
