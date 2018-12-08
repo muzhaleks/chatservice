@@ -77,10 +77,6 @@ dependencies {
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.9'
 
 
-    // Communication between services registered eureka by feign
-    compile 'org.springframework.cloud:spring-cloud-starter-feign'
-
-
     // kafka
     compile 'org.springframework.cloud:spring-cloud-stream'
     compile 'org.springframework.cloud:spring-cloud-starter-stream-kafka'
