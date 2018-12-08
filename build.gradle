@@ -61,6 +61,11 @@ dependencies {
     testCompile 'org.springframework.boot:spring-boot-starter-test:2.0.6.RELEASE'
     compile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.0'
     compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper', version: '9.0.13'
+    
+    //kafka
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-stream', version: '2.0.2.RELEASE'
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-stream-kafka', version: '2.0.2.RELEASE'
+    compile group: 'org.springframework.kafka', name: 'spring-kafka', version: '2.2.2.RELEASE'
 }
 
 bootJar {
