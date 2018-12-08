@@ -4,6 +4,7 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.6.RELEASE")
+        classpath("io.spring.gradle:dependency-management-plugin:1.0.6.RELEASE")
     }
 }
 
@@ -11,6 +12,7 @@ plugins {
     id 'java'
     id 'war'
     id "org.springframework.boot" version "2.0.6.RELEASE"
+    id "io.spring.dependency-management" version "1.0.6.RELEASE"
 }
 
 group 'com.agroculture'
@@ -27,6 +29,15 @@ repositories {
 
 configurations.all {
     exclude group:"ch.qos.logback", module:"logback-core"
+}
+
+dependencyManagement {
+    imports {
+        mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Finchley.RELEASE'
+        mavenBom "org.springframework.cloud:spring-cloud-stream-dependencies:Elmhurst.RELEASE"
+        mavenBom 'org.springframework.cloud:spring-cloud-vault-dependencies:1.1.0.RELEASE'
+        mavenBom "org.springframework.boot:spring-boot-dependencies:2.0.6.RELEASE"
+    }
 }
 
 dependencies {
@@ -52,20 +63,21 @@ dependencies {
     compile 'javax.xml:jaxb-api:2.1'
     compile group: 'org.mapstruct', name: 'mapstruct-processor', version: '1.2.0.Final'
     compile 'org.slf4j:slf4j-simple:1.7.7'
-    compile group: 'org.springframework.data', name: 'spring-data-jpa', version: '2.1.2.RELEASE'
+    compile group: 'org.springframework.data', name: 'spring-data-jpa', version: '1.10.5.RELEASE'
+
     compile group: 'org.springframework.hateoas', name: 'spring-hateoas', version: '0.25.0.RELEASE'
     compile(group: 'com.zaxxer', name: 'HikariCP', version: '2.7.9') {
         exclude(module: 'tools')
     }
+    compile group: 'org.springframework.data', name: 'spring-data-commons-core', version: '2.0.11.RELEASE'
     compile group: 'jstl', name: 'jstl', version: '1.2'
     testCompile 'org.springframework.boot:spring-boot-starter-test:2.0.6.RELEASE'
     compile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.0'
     compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper', version: '9.0.13'
     
     //kafka
-    compile group: 'org.springframework.cloud', name: 'spring-cloud-stream', version: '2.0.2.RELEASE'
-    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-stream-kafka', version: '2.0.2.RELEASE'
-    compile group: 'org.springframework.kafka', name: 'spring-kafka', version: '2.2.2.RELEASE'
+    compile 'org.springframework.cloud:spring-cloud-stream'
+    compile 'org.springframework.cloud:spring-cloud-starter-stream-kafka'
 }
 
 bootJar {

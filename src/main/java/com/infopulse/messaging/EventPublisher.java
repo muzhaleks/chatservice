@@ -4,8 +4,8 @@ import com.infopulse.dto.ChatUserDto;
 import com.infopulse.exception.MessageException;
 import com.infopulse.payload.EventEnum;
 import com.infopulse.payload.Payload;
-import org.apache.kafka.common.header.Headers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.binding.BinderAwareChannelResolver;
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.Message;
@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
+@EnableBinding
 public class EventPublisher {
 
     @Autowired
