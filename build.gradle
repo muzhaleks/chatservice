@@ -56,6 +56,7 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-actuator'
     compile 'org.springframework.kafka:spring-kafka'
     compile 'org.springframework.boot:spring-boot-starter-cache'
+    compile 'org.springframework:spring-websocket'
     // kafka
     compile 'org.springframework.cloud:spring-cloud-stream'
     compile 'org.springframework.cloud:spring-cloud-starter-stream-kafka'
