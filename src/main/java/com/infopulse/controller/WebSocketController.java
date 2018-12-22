@@ -110,7 +110,7 @@ public class WebSocketController extends TextWebSocketHandler {
     private void sendAll(SendMessage sendMessage) {
         try {
             for (Map.Entry<String, WebSocketSession> item : activeUsers.entrySet()) {
-                TextMessage textMessage = new TextMessage(mapper.writeValueAsString(item.getValue()));
+                TextMessage textMessage = new TextMessage(mapper.writeValueAsString(sendMessage));
                 item.getValue().sendMessage(textMessage);
             }
         } catch (IOException e) {
