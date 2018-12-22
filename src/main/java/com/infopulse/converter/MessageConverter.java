@@ -2,23 +2,41 @@ package com.infopulse.converter;
 
 import com.infopulse.dto.SendMessage;
 import com.infopulse.entity.Message;
+import com.infopulse.entity.RedisMessage;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+@Component
 public class MessageConverter {
 
     public SendMessage convertToDto(Message message){
         SendMessage sendMessage =new SendMessage();
+        sendMessage.setType("PRIVATE");
         sendMessage.setMessage(message.getBody());
         sendMessage.setSender(message.getSender().getLogin());
         return sendMessage;
     }
 
-    public List<SendMessage> toListDto(List<Message> messages){
-        return messages.stream()
+    public SendMessage convertToDtoFromRedisMessage(RedisMessage redisMessage){
+        SendMessage sendMessage =new SendMessage();
+        sendMessage.setType("BROADCAST");
+        sendMessage.setSender(redisMessage.getSender());
+        sendMessage.setMessage(redisMessage.getMessage());
+        return sendMessage;
+    }
+
+    public List<SendMessage> convertListPrivateMessagesToSendMessages(List<Message> listMessage){
+        return listMessage.stream()
                 .map(entity -> convertToDto(entity))
+                .collect(Collectors.toList());
+    }
+
+    public List<SendMessage> convertListBroadcastMessagesToSendMessages(List<RedisMessage> listMessage){
+        return listMessage.stream()
+                .map(entity -> convertToDtoFromRedisMessage(entity))
                 .collect(Collectors.toList());
     }
 

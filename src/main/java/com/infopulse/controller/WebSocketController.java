@@ -33,10 +33,10 @@ public class WebSocketController extends TextWebSocketHandler {
 
     @Override
     public void handleTextMessage(WebSocketSession session, TextMessage message)
-            throws InterruptedException, IOException {
+            throws IOException {
         String jsonString = message.getPayload();
         ReceiveMessage receiveMessage = mapper.readValue(jsonString, ReceiveMessage.class);
-        Set<ConstraintViolation<ReceiveMessage>> violations = validator.validate(receiveMessage, ReceiveMessage.class)
+        Set<ConstraintViolation<ReceiveMessage>> violations = validator.validate(receiveMessage, ReceiveMessage.class);
 
         if(!violations.isEmpty()){
             String errorMessage = getErrorMessage(violations);
@@ -51,6 +51,7 @@ public class WebSocketController extends TextWebSocketHandler {
                 webSocketService.getAllMessage(session.getPrincipal().getName())
                         .stream()
                         .peek(m -> sendPrivateMessage(session.getPrincipal().getName(), m)).count();
+                webSocketService.deleteAllPrivateMessages(session.getPrincipal().getName());
                 sendAllChangeActiveList();
             }
             case "BROADCAST":{
@@ -64,7 +65,7 @@ public class WebSocketController extends TextWebSocketHandler {
                 if(isActiveUser(receiveMessage.getReceiver())){
                     sendPrivateMessage(receiveMessage.getReceiver(), sendMessage);
                 }else{
-                    webSocketService.savePrivateMessage(sendMessage);
+                    webSocketService.savePrivateMessage(receiveMessage.getReceiver(), sendMessage);
                 }
             }
             case "LOGOUT":{
