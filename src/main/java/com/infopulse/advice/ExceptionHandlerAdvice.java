@@ -1,8 +1,7 @@
 package com.infopulse.advice;
 
 import com.infopulse.dto.ErrorInfo;
-import com.infopulse.exception.AlreadyExistException;
-import com.infopulse.exception.MessageException;
+import com.infopulse.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 public class ExceptionHandlerAdvice {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler({AlreadyExistException.class})
+    @ExceptionHandler({AlreadyExistException.class,
+                       IncorrectParameterException.class,
+                       UserAlreadyBanedException.class,
+                       UserCanNotBeUnBanedException.class,
+                       UserNotFoundException.class})
     @ResponseBody
     public ErrorInfo handle(HttpServletRequest request, Exception exception){
         return new ErrorInfo().setMessage(exception.getMessage())
