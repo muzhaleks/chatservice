@@ -10,6 +10,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 public class SendMessage {
+    private String type;
     private String message;
     private String sender;
     private List<String> usersLogin;
