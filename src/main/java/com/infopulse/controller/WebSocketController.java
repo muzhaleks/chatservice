@@ -53,11 +53,13 @@ public class WebSocketController extends TextWebSocketHandler {
                         .peek(m -> sendPrivateMessage(session.getPrincipal().getName(), m)).count();
                 webSocketService.deleteAllPrivateMessages(session.getPrincipal().getName());
                 sendAllChangeActiveList();
+                break;
             }
             case "BROADCAST":{
                 SendMessage sendMessage = createSendMessage(session.getPrincipal().getName(), receiveMessage.getMessage(), "BROADCAST");
                 sendAll(sendMessage);
                 webSocketService.saveBroadcastMessage(sendMessage);
+                break;
 
             }
             case "PRIVATE":{
@@ -67,11 +69,13 @@ public class WebSocketController extends TextWebSocketHandler {
                 }else{
                     webSocketService.savePrivateMessage(receiveMessage.getReceiver(), sendMessage);
                 }
+                break;
             }
             case "LOGOUT":{
                 SendMessage sendMessage = createSendMessage(session.getPrincipal().getName(), "",  "LOGOUT");
                 sendPrivateMessage(session.getPrincipal().getName(), sendMessage);
                 removeFromActiveUsers(session.getPrincipal().getName());
+                break;
             }
 
         }

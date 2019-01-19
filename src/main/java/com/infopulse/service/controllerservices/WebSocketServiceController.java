@@ -19,8 +19,8 @@ public class WebSocketServiceController {
     @Autowired
     private MessageConverter messageConverter;
 
-    public List<SendMessage> getAllMessage(String sender){
-       List<Message> messages = messageService.getAllPrivateMessages(sender);
+    public List<SendMessage> getAllMessage(String receiver){
+       List<Message> messages = messageService.getAllPrivateMessages(receiver);
        List<SendMessage> privateMessages = messageConverter.convertListPrivateMessagesToSendMessages(messages);
        List<RedisMessage> broadcastMessages = messageService.getAllBroadCastMessages();
        List<SendMessage> broadMessages = messageConverter.convertListBroadcastMessagesToSendMessages(broadcastMessages);

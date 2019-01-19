@@ -24,8 +24,8 @@ public class MessageService {
     @Autowired
     private RedisTemplate<String, RedisMessage> redisMessageRepository;
 
-    public List<Message> getAllPrivateMessages(String sender) {
-        return messageRepository.findByReceiver_Login(sender);
+    public List<Message> getAllPrivateMessages(String receiver) {
+        return messageRepository.findByReceiver_Login(receiver);
     }
 
     @Transactional
