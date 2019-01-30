@@ -15,11 +15,15 @@ import java.util.List;
 @Entity
 @Table(name="chatuser")
 public class ChatUser {
+
+
+
     @Id
-    @GeneratedValue(generator="increment")
-    @GenericGenerator(name="increment", strategy = "increment")
+    @GeneratedValue(generator="custom_generator")
+    @GenericGenerator(name="custom_generator", strategy = "com.infopulse.idUtill.IdGenerator")
     @Basic
-    private Long id;
+    private String  id;
+
 
     @Column(name="name", nullable = false)
     private String name;

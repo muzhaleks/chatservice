@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.keycloak:keycloak-core:4.8.1.Final">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.keycloak/keycloak-core/4.8.1.Final/2eef6b93014a580de4fdd0785737d0d0b83540a7/keycloak-core-4.8.1.Final.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.keycloak/keycloak-core/4.8.1.Final/18de04de285dcc1b211bcc91b86ebe371c947fb6/keycloak-core-4.8.1.Final-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
