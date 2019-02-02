@@ -8,7 +8,9 @@ import com.infopulse.exception.UserNotFoundException;
 import com.infopulse.repository.BanRepository;
 import com.infopulse.repository.ChatUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -39,7 +41,8 @@ public class BanDataService {
 
     }
 
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Modifying
     public void removeFromBan(String login){
         ChatUser chatUser = chatUserRepository.findByLogin(login);
         if(chatUser == null){
@@ -51,6 +54,7 @@ public class BanDataService {
             throw new UserCanNotBeUnBanedException("User can not be deleted from ban");
         }
         Ban ban = chatUser.getBan();
-        banRepository.delete(ban);
+        chatUser.setBan(null);
+        banRepository.deleteById(ban.getId());
     }
 }
