@@ -24,6 +24,7 @@ public class ChatUserController {
         chatUserControllerService.saveChatUser(chatUserDto);
     }
 
+    @CrossOrigin
     @RequestMapping(value="/users", method=RequestMethod.GET)
     public List<ChatUserDto> getAllUsersExceptAdmins(){
         return chatUserControllerService.getAllUsers();

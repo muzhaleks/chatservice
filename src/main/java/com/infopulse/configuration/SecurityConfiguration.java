@@ -21,6 +21,11 @@ import org.springframework.security.web.authentication.session.NullAuthenticated
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
 import org.springframework.security.web.firewall.HttpFirewall;
 import org.springframework.security.web.firewall.StrictHttpFirewall;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -112,16 +117,18 @@ public class SecurityConfiguration extends KeycloakWebSecurityConfigurerAdapter 
         http
                 //TODO: remove this line before going live!
                 .csrf().disable()
+                .cors().disable()
                 //.csrf().requireCsrfProtectionMatcher(keycloakCsrfRequestMatcher())
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .sessionAuthenticationStrategy(sessionAuthenticationStrategy())
                 .and()
                 .addFilterBefore(keycloakPreAuthActionsFilter(), LogoutFilter.class)
-                //.addFilterBefore(keycloakAuthenticationProcessingFilter(), X509AuthenticationFilter.class)
+                .addFilterBefore(keycloakAuthenticationProcessingFilter(), X509AuthenticationFilter.class)
                 .addFilterBefore(exceptionTranslationFilter(), KeycloakPreAuthActionsFilter.class)
                 .authorizeRequests()
 
+                .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
                 .antMatchers(HttpMethod.GET,"/users").hasRole("ADMIN")
                 .antMatchers(HttpMethod.POST, "/ban").hasRole("ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/ban").hasRole("ADMIN")
@@ -135,6 +142,16 @@ public class SecurityConfiguration extends KeycloakWebSecurityConfigurerAdapter 
                 .logoutUrl("/sso/logout").permitAll()
                 .logoutSuccessUrl("/");
 
+    }
+
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 
 }
