@@ -22,7 +22,7 @@ public class ChatUser {
     @GeneratedValue(generator="custom_generator")
     @GenericGenerator(name="custom_generator", strategy = "com.infopulse.idUtill.IdGenerator")
     @Basic
-    private String  id;
+    private String id;
 
 
     @Column(name="name", nullable = false)
